@@ -1,0 +1,7 @@
+django
+mssql-django
+black
+isort
+pylint
+pylint-django
+pre-commit
