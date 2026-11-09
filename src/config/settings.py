@@ -75,8 +75,14 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "mssql",
+        "NAME": "EducationCatalog",
+        "HOST": "DIGMA_EVE_P4851\\SQLEXPRESS",
+        "PORT": "",
+        "OPTIONS": {
+            "driver": "ODBC Driver 18 for SQL Server",
+            "extra_params": "TrustServerCertificate=yes; Trusted_Connection=yes;",
+        },
     }
 }
 
