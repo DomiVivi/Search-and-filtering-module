@@ -92,3 +92,16 @@ class MaterialTag(models.Model):
 
     def __str__(self):
         return f"{self.material.name} - {self.tag.name}"
+
+class Cache(models.Model):
+    query_hash = models.CharField(max_length=255, unique=True,verbose_name="Хэш запроса")
+    query_text = models.CharField(max_length=500, verbose_name="Текст запроса")
+    results_json = models.TextField(verbose_name="Результаты (JSON)")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата кэширования")
+
+    class Meta:
+        verbose_name = "Кэш поиска"
+        verbose_name_plural = "Кэш поисковых запросов"
+
+    def __str__(self):
+        return self.query_text
