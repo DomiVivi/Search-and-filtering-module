@@ -16,7 +16,7 @@ class Discipline(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название дисциплины")
 
     class Meta:
-        verbose_name = "Дисципплина"
+        verbose_name = "Дисциплина"
         verbose_name_plural = "Дисциплины"
 
     def __str__(self):
@@ -31,11 +31,11 @@ class Year(models.Model):
         verbose_name_plural = "Года"
 
     def __str__(self):
-        return self.year
+        return str(self.year)
 
 
 class Type(models.Model):
-    name = models.CharField(max_length=255, verbose_name="Типа ресура")
+    name = models.CharField(max_length=255, verbose_name="Тип ресурса")
 
     class Meta:
         verbose_name = "Тип ресурса"
@@ -46,7 +46,7 @@ class Type(models.Model):
 
 
 class Language(models.Model):
-    name = models.CharField(max_length=255, verbose_name="Языка")
+    name = models.CharField(max_length=255, verbose_name="Язык")
 
     class Meta:
         verbose_name = "Язык"
@@ -57,7 +57,7 @@ class Language(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=255, verbose_name="Тега")
+    name = models.CharField(max_length=255, verbose_name="Тег")
 
     class Meta:
         verbose_name = "Тег"
@@ -84,7 +84,7 @@ class EducationalMaterial(models.Model):
         Language, on_delete=models.CASCADE, verbose_name="Язык"
     )
 
-    is_acive = models.BooleanField(default=True, verbose_name="Активен")
+    is_active = models.BooleanField(default=True, verbose_name="Активен")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата добавления")
 
     class Meta:
