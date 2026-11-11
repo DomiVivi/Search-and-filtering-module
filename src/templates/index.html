@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Выберите учебный материал</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Автор</th>
+                <th>Дисциплина</th>
+                <th>Год</th>
+                <th>Тип</th>
+                <th>Ссылка</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for material in materials %}
+            <tr>
+                <td>{{ material.name }}</td>
+                <td>{{ material.author.full_name }}</td>
+                <td>{{ material.discipline.name }}</td>
+                <td>{{ material.year.year }}</td>
+                <td>{{ material.type.name }}</td>
+                <td>
+                    {% if material.link %}
+                        <a href="{{ material.link }}" target="_blank" class="btn">Открыть</a>
+                    {% else %}
+                        <span class="text-muted">Нет ссылки</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr class="empty-row">
+                <td colspan="6">Материалы пока не добавлены.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
