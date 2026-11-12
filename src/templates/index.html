@@ -3,6 +3,39 @@
 {% block content %}
     <h2>Выберите учебный материал</h2>
 
+    <form method="get" class="filter-form">
+        <select name="type">
+            <option value="">Все типы</option>
+            {% for t in types %}
+                <option value="{{ t.id }}" {% if request.GET.type == t.id|stringformat:"s" %}selected{% endif %}>{{ t.name }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="author">
+            <option value="">Все авторы</option>
+            {% for a in authors %}
+                <option value="{{ a.id }}" {% if request.GET.author == a.id|stringformat:"s" %}selected{% endif %}>{{ a.full_name }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="year">
+            <option value="">Все годы</option>
+            {% for y in years %}
+                <option value="{{ y.id }}" {% if request.GET.year == y.id|stringformat:"s" %}selected{% endif %}>{{ y.year }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="tag">
+            <option value="">Все теги</option>
+            {% for tag in tags %}
+                <option value="{{ tag.id }}" {% if request.GET.tag == tag.id|stringformat:"s" %}selected{% endif %}>{{ tag.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Применить</button>
+        <a href="{% url 'material_list' %}" class="reset-link">Сбросить</a>
+    </form>
+
     <table class="table">
         <thead>
             <tr>
@@ -32,7 +65,7 @@
             </tr>
             {% empty %}
             <tr class="empty-row">
-                <td colspan="6">Материалы пока не добавлены.</td>
+                <td colspan="6">По выбранным фасетам ничего не найдено.</td>
             </tr>
             {% endfor %}
         </tbody>
