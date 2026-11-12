@@ -1,3 +1,4 @@
+/* Базовые настройки */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -12,6 +13,7 @@ body {
     line-height: 1.5;
 }
 
+/* Шапка */
 .navbar {
     background-color: #417690;
     padding: 10px 20px;
@@ -38,6 +40,7 @@ body {
     text-decoration: none; 
 }
 
+/* Контейнер контента */
 .container {
     max-width: 1200px;
     margin: 20px auto;
@@ -45,7 +48,6 @@ body {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 h2 {
@@ -55,6 +57,7 @@ h2 {
     margin-bottom: 15px;
 }
 
+/* Таблицы */
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -81,6 +84,7 @@ h2 {
     background-color: #f9f9f9;
 }
 
+/* Ссылки в таблице */
 .table td a {
     color: #447e9b;
     text-decoration: none;
