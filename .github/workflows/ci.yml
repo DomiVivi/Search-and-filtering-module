@@ -39,4 +39,9 @@ jobs:
       - name: Lint with Black
         run: black --check .
 
+      - name: Run Tests
+        run: |
+          cd src
+          pythob manage.py test tests
+
       # Runs a set of commands using the runners shell
