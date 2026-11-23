@@ -42,6 +42,6 @@ jobs:
       - name: Run Tests
         run: |
           cd src
-          pythob manage.py test tests
+          python manage.py test tests
 
       # Runs a set of commands using the runners shell
