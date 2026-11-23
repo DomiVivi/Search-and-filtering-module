@@ -40,6 +40,8 @@ jobs:
         run: black --check .
 
       - name: Run Tests
+        env:
+          USE_SQLITE_FOR_TESTS: "1"
         run: |
           cd src
           python manage.py test tests
