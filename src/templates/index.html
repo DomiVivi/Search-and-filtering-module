@@ -89,7 +89,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for material in materials %}
+            {% for material in  page_obj %}
             <tr>
                 <td>{{ material.name }}</td>
                 <td>{{ material.author.full_name }}</td>
@@ -113,4 +113,17 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.sort_field1 %}&sort_field1={{ request.GET.sort_field1 }}&sort_dir1={{ request.GET.sort_dir1 }}{% endif %}">Назад</a>
+        {% endif %}
+
+        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.sort_field1 %}&sort_field1={{ request.GET.sort_field1 }}&sort_dir1={{ request.GET.sort_dir1 }}{% endif %}">Вперед</a>
+        {% endif %}
+    </div>
 {% endblock %}
