@@ -57,16 +57,16 @@ def material_list(request):
     if order_by_list:
         materials = materials.order_by(*order_by_list)
 
-    paginator = Paginator(materials, 5) 
-    page_number = request.GET.get('page') 
-    page_obj = paginator.get_page(page_number) 
+    paginator = Paginator(materials, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     context = {
         "page_obj": page_obj,
-        "types": Type.objects.all().order_by('name'),
-        "authors": Author.objects.all().order_by('full_name'),
-        "years": Year.objects.all().order_by('year'),
-        "tags": Tag.objects.all().order_by('name'),
+        "types": Type.objects.all().order_by("name"),
+        "authors": Author.objects.all().order_by("full_name"),
+        "years": Year.objects.all().order_by("year"),
+        "tags": Tag.objects.all().order_by("name"),
         "current_sort_field1": sort_field1,
         "current_sort_dir1": sort_dir1,
         "current_sort_field2": sort_field2,
