@@ -37,6 +37,8 @@ def material_list(request):
             order_by_list.append(f"{prefix1}year__year")
         elif sort_field1 == "discipline":
             order_by_list.append(f"{prefix1}discipline__name")
+        elif sort_field1 == "language":
+            order_by_list.append(f"{prefix1}language__name")
 
     if sort_field2:
         prefix2 = "-" if sort_dir2 == "desc" else ""
@@ -48,6 +50,8 @@ def material_list(request):
             order_by_list.append(f"{prefix2}year__year")
         elif sort_field2 == "discipline":
             order_by_list.append(f"{prefix2}discipline__name")
+        elif sort_field2 == "language":
+            order_by_list.append(f"{prefix2}language__name")
 
     if order_by_list:
         materials = materials.order_by(*order_by_list)
