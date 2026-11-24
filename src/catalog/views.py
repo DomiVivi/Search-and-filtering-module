@@ -58,10 +58,10 @@ def material_list(request):
 
     context = {
         "materials": materials,
-        "types": Type.objects.all(),
-        "authors": Author.objects.all(),
-        "years": Year.objects.all(),
-        "tags": Tag.objects.all(),
+        "types": Type.objects.all().order_by('name'),
+        "authors": Author.objects.all().order_by('full_name'),
+        "years": Year.objects.all().order_by('year'),
+        "tags": Tag.objects.all().order_by('name'),
         "current_sort_field1": sort_field1,
         "current_sort_dir1": sort_dir1,
         "current_sort_field2": sort_field2,
