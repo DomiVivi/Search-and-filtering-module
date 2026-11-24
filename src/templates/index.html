@@ -4,36 +4,75 @@
     <h2>Выберите учебный материал</h2>
 
     <form method="get" class="filter-form">
-        <select name="type">
-            <option value="">Все типы</option>
-            {% for t in types %}
-                <option value="{{ t.id }}" {% if request.GET.type == t.id|stringformat:"s" %}selected{% endif %}>{{ t.name }}</option>
-            {% endfor %}
-        </select>
+        <!-- Блок фильтров -->
+        <div class="filters-section">
+            <strong>Фильтры</strong>
+            <br>
+            <select name="type">
+                <option value="">Все типы</option>
+                {% for t in types %}
+                    <option value="{{ t.id }}" {% if request.GET.type == t.id|stringformat:"s" %}selected{% endif %}>{{ t.name }}</option>
+                {% endfor %}
+            </select>
 
-        <select name="author">
-            <option value="">Все авторы</option>
-            {% for a in authors %}
-                <option value="{{ a.id }}" {% if request.GET.author == a.id|stringformat:"s" %}selected{% endif %}>{{ a.full_name }}</option>
-            {% endfor %}
-        </select>
+            <select name="author">
+                <option value="">Все авторы</option>
+                {% for a in authors %}
+                    <option value="{{ a.id }}" {% if request.GET.author == a.id|stringformat:"s" %}selected{% endif %}>{{ a.full_name }}</option>
+                {% endfor %}
+            </select>
 
-        <select name="year">
-            <option value="">Все годы</option>
-            {% for y in years %}
-                <option value="{{ y.id }}" {% if request.GET.year == y.id|stringformat:"s" %}selected{% endif %}>{{ y.year }}</option>
-            {% endfor %}
-        </select>
+            <select name="year">
+                <option value="">Все годы</option>
+                {% for y in years %}
+                    <option value="{{ y.id }}" {% if request.GET.year == y.id|stringformat:"s" %}selected{% endif %}>{{ y.year }}</option>
+                {% endfor %}
+            </select>
 
-        <select name="tag">
-            <option value="">Все теги</option>
-            {% for tag in tags %}
-                <option value="{{ tag.id }}" {% if request.GET.tag == tag.id|stringformat:"s" %}selected{% endif %}>{{ tag.name }}</option>
-            {% endfor %}
-        </select>
+            <select name="tag">
+                <option value="">Все теги</option>
+                {% for tag in tags %}
+                    <option value="{{ tag.id }}" {% if request.GET.tag == tag.id|stringformat:"s" %}selected{% endif %}>{{ tag.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+       
+        <!-- Блок сортировки -->
+        <div class="sorting-section">
+            <strong>Сортировка</strong>
+            <br>
+            <select name="sort_field1">
+                <option value="">Сортировать по...</option>
+                <option value="name" {% if current_sort_field1 == 'name' %}selected{% endif %}>Название</option>
+                <option value="author" {% if current_sort_field1 == 'author' %}selected{% endif %}>Автор</option>
+                <option value="year" {% if current_sort_field1 == 'year' %}selected{% endif %}>Год</option>
+                <option value="discipline" {% if current_sort_field1 == 'discipline' %}selected{% endif %}>Дисциплина</option>
+                <option value="language" {% if current_sort_field1 == 'language' %}selected{% endif %}>Язык</option>
+            </select>
+            <select name="sort_dir1">
+                <option value="asc" {% if current_sort_dir1 == 'asc' %}selected{% endif %}>Возрастание</option>
+                <option value="desc" {% if current_sort_dir1 == 'desc' %}selected{% endif %}>Убывание</option>
+            </select>
 
-        <button type="submit">Применить</button>
-        <a href="{% url 'material_list' %}" class="reset-link">Сбросить</a>
+            <select name="sort_field2">
+                <option value="">Затем по...</option>
+                <option value="name" {% if current_sort_field2 == 'name' %}selected{% endif %}>Название</option>
+                <option value="author" {% if current_sort_field2 == 'author' %}selected{% endif %}>Автор</option>
+                <option value="year" {% if current_sort_field2 == 'year' %}selected{% endif %}>Год</option>
+                <option value="discipline" {% if current_sort_field2 == 'discipline' %}selected{% endif %}>Дисциплина</option>
+                <option value="language" {% if current_sort_field2 == 'language' %}selected{% endif %}>Язык</option>
+            </select>
+            <select name="sort_dir2">
+                <option value="asc" {% if current_sort_dir2 == 'asc' %}selected{% endif %}>Возрастание</option>
+                <option value="desc" {% if current_sort_dir2 == 'desc' %}selected{% endif %}>Убывание</option>
+            </select>
+        </div>
+
+        <!-- Кнопки -->
+        <div class="actions-section">
+            <button type="submit">Применить</button>
+            <a href="{% url 'material_list' %}" class="reset-link">Сбросить</a>
+        </div>
     </form>
 
     <table class="table">
@@ -45,6 +84,7 @@
                 <th>Дисциплина</th>
                 <th>Год</th>
                 <th>Тип</th>
+                <th>Язык</th>
                 <th>Ссылка</th>
             </tr>
         </thead>
@@ -57,6 +97,7 @@
                 <td>{{ material.discipline.name }}</td>
                 <td>{{ material.year.year }}</td>
                 <td>{{ material.type.name }}</td>
+                <td>{{ material.language.name }}</td>
                 <td>
                     {% if material.link %}
                         <a href="{{ material.link }}" target="_blank" class="btn">Открыть</a>
@@ -67,7 +108,7 @@
             </tr>
             {% empty %}
             <tr class="empty-row">
-                <td colspan="6">По выбранным фасетам ничего не найдено.</td>
+                <td colspan="8">По выбранным фасетам ничего не найдено.</td>
             </tr>
             {% endfor %}
         </tbody>

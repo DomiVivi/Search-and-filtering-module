@@ -104,17 +104,48 @@ h2 {
     color: #666;
 }
 
-/* Фасетный поиск */
+/* Главный контейнер формы */
 .filter-form {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px; 
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ccc; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
     align-items: center;
 }
 
+/* Блоки фильтров и сортировки */
+.filters-section,
+.sorting-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; 
+    align-items: center;
+}
+
+.filters-section br,
+.sorting-section br {
+    display: none; 
+}
+
+/* Стили для заголовков */
+.filters-section strong,
+.sorting-section strong {
+    margin-right: 5px;
+    color: #333;
+    font-size: 13px;
+}
+
+/* Блок кнопок */
+.actions-section {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: auto; 
+}
+
+/* Стили выпадающих списков */
 .filter-form select {
     padding: 5px 8px;
     border: 1px solid #ccc;
@@ -124,6 +155,7 @@ h2 {
     font-family: inherit;
 }
 
+/* Стили кнопки */
 .filter-form button {
     padding: 5px 15px;
     background-color: #f8f8f8;
