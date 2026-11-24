@@ -179,3 +179,34 @@ h2 {
 .filter-form .reset-link:hover {
     text-decoration: underline;
 }
+
+/* Блок пагинации */
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    padding-top: 15px;
+    font-size: 14px;
+
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 5px 12px;
+    color: #447e9b; 
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    transition: background-color 0.2s;
+}
+
+.pagination a:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.pagination span {
+    color: #666;
+    font-weight: 550 ;
+}

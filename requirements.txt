@@ -5,3 +5,4 @@ isort
 pylint
 pylint-django
 pre-commit
+djangorestframework

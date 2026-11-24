@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 from .models import EducationalMaterial, Author, Type, Year, Tag
 
 
 def material_list(request):
-    materials = EducationalMaterial.objects.filter(is_active=True)
+    materials = EducationalMaterial.objects.filter(is_active=True).order_by("id")
 
     type_id = request.GET.get("type", "")
     author_id = request.GET.get("author", "")
@@ -56,12 +57,16 @@ def material_list(request):
     if order_by_list:
         materials = materials.order_by(*order_by_list)
 
+    paginator = Paginator(materials, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        "materials": materials,
-        "types": Type.objects.all(),
-        "authors": Author.objects.all(),
-        "years": Year.objects.all(),
-        "tags": Tag.objects.all(),
+        "page_obj": page_obj,
+        "types": Type.objects.all().order_by("name"),
+        "authors": Author.objects.all().order_by("full_name"),
+        "years": Year.objects.all().order_by("year"),
+        "tags": Tag.objects.all().order_by("name"),
         "current_sort_field1": sort_field1,
         "current_sort_dir1": sort_dir1,
         "current_sort_field2": sort_field2,
