@@ -44,7 +44,7 @@ class SortingTests(TestCase):
 
     def test_sort_by_name_asc(self):
         response = self.client.get("/", {"sort_field1": "name", "sort_dir1": "asc"})
-        materials = response.context["materials"]
+        materials = response.context["page_obj"].object_list
 
         self.assertEqual(materials[0].name, "Война и мир")
         self.assertEqual(materials[1].name, "Воскресенье")
@@ -60,7 +60,7 @@ class SortingTests(TestCase):
                 "sort_dir2": "desc",
             },
         )
-        materials = response.context["materials"]
+        materials = response.context["page_obj"].object_list
 
         self.assertEqual(materials[0].author.full_name, "Пушкин А.С.")
         self.assertEqual(materials[0].name, "Евгений Онегин")
@@ -78,7 +78,7 @@ class SortingTests(TestCase):
                 "sort_dir2": "asc",
             },
         )
-        materials = response.context["materials"]
+        materials = response.context["page_obj"].object_list
 
         self.assertEqual(materials[0].discipline.name, "Литература")
         self.assertEqual(materials[0].name, "Евгений Онегин")

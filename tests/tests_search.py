@@ -60,12 +60,12 @@ class SearchTests(TestCase):
 
     def test_filter_by_author(self):
         response = self.client.get("/", {"author": self.author1.id})
-        materials = response.context["materials"]
+        materials = response.context["page_obj"].object_list
         self.assertEqual(len(materials), 2)
 
     def test_filter_by_type(self):
         response = self.client.get("/", {"type": self.type_book.id})
-        materials = response.context["materials"]
+        materials = response.context["page_obj"].object_list
         self.assertEqual(len(materials), 2)
 
     def test_combined_filters_success(self):
@@ -78,7 +78,7 @@ class SearchTests(TestCase):
                 "tag": self.tag_poems.id,
             },
         )
-        materials = response.context["materials"]
+        materials = response.context["page_obj"].object_list
         self.assertEqual(len(materials), 1)
         self.assertEqual(materials[0].name, "Сборник стихов")
 
@@ -90,5 +90,5 @@ class SearchTests(TestCase):
                 "author": self.author2.id,
             },
         )
-        materials = response.context["materials"]
+        materials = response.context["page_obj"].object_list
         self.assertEqual(len(materials), 0)

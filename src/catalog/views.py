@@ -5,7 +5,7 @@ from .models import EducationalMaterial, Author, Type, Year, Tag
 
 
 def material_list(request):
-    materials = EducationalMaterial.objects.filter(is_active=True)
+    materials = EducationalMaterial.objects.filter(is_active=True).order_by("id")
 
     type_id = request.GET.get("type", "")
     author_id = request.GET.get("author", "")
