@@ -1,10 +1,56 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
+import json
+import hashlib
 
-from .models import EducationalMaterial, Author, Type, Year, Tag
+from .models import EducationalMaterial, Author, Type, Year, Tag, Cache
 
 
 def material_list(request):
+    query_params = request.GET.urlencode()
+
+    if query_params:
+        query_hash = hashlib.md5(query_params.encode("utf-8")).hexdigest()
+        cached_entry = Cache.objects.filter(query_hash=query_hash).first()
+
+        if cached_entry:
+            material_ids = json.loads(cached_entry.results_json)
+            materials = EducationalMaterial.objects.filter(id__in=material_ids)
+
+            materials = sorted(materials, key=lambda x: material_ids.index(x.id))
+        else:
+            materials = get_filtered_materials(request)
+
+            ids_list = [m.id for m in materials]
+            Cache.objects.update_or_create(
+                query_hash=query_hash,
+                defaults={
+                    "query_text": query_params,
+                    "results_json": json.dumps(ids_list),
+                },
+            )
+    else:
+        materials = EducationalMaterial.objects.filter(is_active=True)
+
+    paginator = Paginator(materials, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "page_obj": page_obj,
+        "types": Type.objects.all().order_by("name"),
+        "authors": Author.objects.all().order_by("full_name"),
+        "years": Year.objects.all().order_by("year"),
+        "tags": Tag.objects.all().order_by("name"),
+        "current_sort_field1": request.GET.get("sort_field1", ""),
+        "current_sort_dir1": request.GET.get("sort_dir1", "asc"),
+        "current_sort_field2": request.GET.get("sort_field2", ""),
+        "current_sort_dir2": request.GET.get("sort_dir2", "asc"),
+    }
+    return render(request, "index.html", context)
+
+
+def get_filtered_materials(request):
     materials = EducationalMaterial.objects.filter(is_active=True).order_by("id")
 
     type_id = request.GET.get("type", "")
@@ -57,19 +103,4 @@ def material_list(request):
     if order_by_list:
         materials = materials.order_by(*order_by_list)
 
-    paginator = Paginator(materials, 5)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-
-    context = {
-        "page_obj": page_obj,
-        "types": Type.objects.all().order_by("name"),
-        "authors": Author.objects.all().order_by("full_name"),
-        "years": Year.objects.all().order_by("year"),
-        "tags": Tag.objects.all().order_by("name"),
-        "current_sort_field1": sort_field1,
-        "current_sort_dir1": sort_dir1,
-        "current_sort_field2": sort_field2,
-        "current_sort_dir2": sort_dir2,
-    }
-    return render(request, "index.html", context)
+    return materials
