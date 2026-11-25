@@ -30,7 +30,7 @@ def material_list(request):
                 },
             )
     else:
-        materials = EducationalMaterial.objects.filter(is_active=True)
+        materials = EducationalMaterial.objects.filter(is_active=True).order_by("id")
 
     paginator = Paginator(materials, 5)
     page_number = request.GET.get("page")
